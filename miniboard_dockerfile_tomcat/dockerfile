@@ -1,0 +1,7 @@
+FROM tomcat
+ENV VIRTUAL_HOST=www.miniboard.com
+ADD server.xml /usr/local/tomcat/conf
+ADD webroot.tar /usr/local/tomcat/webapps
+RUN cd /usr/local/tomcat/webapps && tar xvf webroot.tar
+WORKDIR /usr/local/tomcat
+EXPOSE 8080

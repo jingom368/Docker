@@ -1,0 +1,38 @@
+version: "1.0"
+services:
+  apache2:
+    build: C:\MySource\docker\miniboard_dockcerfile_apache
+    networks:
+      miniboard:
+        ipv4_address: 172.30.0.2
+    restart: always
+    environment:
+      - VIRTUAL_HOST=www.miniboard.com
+    ports:
+      - "80:80"
+  tomcat10:
+    build: C:\MySource\docker\miniboard_dockerfile_tomcat
+    networks:
+      miniboard:
+        ipv4_address: 172.30.0.3
+    restart: always
+    environment:
+      - VIRTUAL_HOST=www.miniboard.com
+    ports:
+      - "8080:8080"
+  mariadb:
+    build: C:\MySource\docker\miniboard_dockerfile_mariadb
+    networks:
+      miniboard:
+        ipv4_address: 172.30.0.4
+    restart: always
+    ports:
+      - "3307:3306"
+networks:
+  miniboard:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: "172.30.0.0/24"
+        gateway: "172.30.0.1"
